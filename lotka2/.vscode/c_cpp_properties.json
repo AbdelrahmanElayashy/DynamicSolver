@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**"
+                
+            ],
+            "defines": [],
+
+            "compilerPath": "/usr/local/cuda/bin/g++ -I//home/elayashy/lotka-project/lotka2/lotka2/eigen2/Eigen",
+
+            "compilerPath": "/usr/local/cuda/bin/g++",
+
+            "compilerPath": "/usr/local/cuda/bin/g++",
+
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}

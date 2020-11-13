@@ -1,0 +1,59 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "type": "shell",
+        "label": "g++ build active file",
+        "command": "/usr/bin/g++",
+        "args": [
+          "-g",
+          "-pthread",
+          "/home/elayashy/lotka-project/lotka2/lotka2/main.cpp",
+          "/home/elayashy/lotka-project/lotka2/lotka2/EinspurModell.cpp",
+          "/home/elayashy/lotka-project/lotka2/lotka2/ApproxHeun.cpp",
+"/home/elayashy/lotka-project/lotka2/lotka2/ApproxRK3.cpp",
+"/home/elayashy/lotka-project/lotka2/lotka2/ApproxRK4.cpp",
+"/home/elayashy/lotka-project/lotka2/lotka2/BlockingQueue.cpp",
+"/home/elayashy/lotka-project/lotka2/lotka2/EquationContainer.cpp",
+"/home/elayashy/lotka-project/lotka2/lotka2/EquationsInScheduler.cpp",
+"/home/elayashy/lotka-project/lotka2/lotka2/ExplicitEuler.cpp",
+"/home/elayashy/lotka-project/lotka2/lotka2/ExplicitFourStep.cpp",
+"/home/elayashy/lotka-project/lotka2/lotka2/ExplicitThreeStep.cpp",
+"/home/elayashy/lotka-project/lotka2/lotka2/ExplicitTwoStep.cpp",
+"/home/elayashy/lotka-project/lotka2/lotka2/LotkaModell.cpp",
+"/home/elayashy/lotka-project/lotka2/lotka2/MethodContainer.cpp",
+"/home/elayashy/lotka-project/lotka2/lotka2/MethodsInScheduler.cpp",
+"/home/elayashy/lotka-project/lotka2/lotka2/MyLibrary.cpp",
+"/home/elayashy/lotka-project/lotka2/lotka2/Priority_SafeQueue.cpp",
+"/home/elayashy/lotka-project/lotka2/lotka2/RK2.cpp",
+"/home/elayashy/lotka-project/lotka2/lotka2/RK3.cpp",
+"/home/elayashy/lotka-project/lotka2/lotka2/RK4.cpp",
+"/home/elayashy/lotka-project/lotka2/lotka2/Scheduler.cpp",
+"/home/elayashy/lotka-project/lotka2/lotka2/ThreadsPool.cpp",
+
+          "-o",
+
+        
+          "${fileDirname}/${fileBasenameNoExtension}",
+          "-O3",
+          "-funroll-loops",
+          "-march=native",
+          "-mfpmath=sse",
+          "-mno-avx256-split-unaligned-load",
+          
+          
+
+        ],
+        "options": {
+          "cwd": "/usr/bin"
+        },
+        "problemMatcher": [
+          "$gcc"
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        }
+      }
+    ]
+  }
