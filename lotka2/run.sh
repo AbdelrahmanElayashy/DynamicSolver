@@ -59,11 +59,9 @@ done
 
 cd ${name_folder}
 if [ -e ${scheduler_result} ];then
-  echo "moving i will"
   mv `pwd`/${scheduler_result} `pwd`/${search_folder}/
 fi
 if [ -e ${seq_result} ];then
-  echo "moving i will"
   mv `pwd`/${seq_result} `pwd`/${search_folder}/
 fi
 
