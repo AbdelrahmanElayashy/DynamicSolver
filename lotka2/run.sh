@@ -66,4 +66,4 @@ if [ -e ${seq_result} ];then
 fi
 
 
-echo "Finish!"
+echo "Finish"
