@@ -327,6 +327,8 @@ void Scheduler::print_scheduler_result() {
 	for (std::vector<std::string>::const_iterator i = this->scheduler_result.begin(); i != this->scheduler_result.end(); ++i) {
 		this->myfile << *i << std::endl;
 	}
+	this->scheduler_result.clear();
+	this->scheduler_result.shrink_to_fit();
 }
 
 std::vector<Eigen::VectorXd>* Scheduler::get_yi() {
