@@ -32,6 +32,7 @@ private:
 	double dt;
 	MethodContainer * approx_method;
 	int current_step;
+	std::vector<std::string> scheduler_result;
 
 
 		Eigen::VectorXd yi_plus_1;
@@ -58,7 +59,7 @@ public:
 	AbstractModell& get_model();
 	Priority_SafeQueue<EquationContainer>* get_scheduler_queue();
 	MethodsInScheduler get_scheduler_methods();
-
+	void print_scheduler_result();
 
 	Eigen::VectorXd get_yi_plus_1();
 

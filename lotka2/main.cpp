@@ -28,10 +28,10 @@ int main(int argc, char* argv[]) {
 	/*int model = 0;
 	int choose_step = 42;*/
 
-	int model = std::atoi(argv[1]);
-	int choose_step = std::atoi(argv[2]);
+	int model = 5;
+	int choose_step = 42;
 	int solve_way = 1;
-	double step = 0.01;
+	double step = 0;
 	int numberOfEquations = model;
 	long long numberOfLoops = 0; 
 	global_size = choose_step;
@@ -83,7 +83,7 @@ int main(int argc, char* argv[]) {
 		step = 0.0001;
 	}
 	else if (choose_step = 42) {
-		numberOfLoops = 30;
+		numberOfLoops = 30000;
 		step = 0.01;
 	}
 	else {
@@ -338,9 +338,9 @@ void solution_method(int solve_way, AbstractModell& mod, Eigen::VectorXd& yi, Ei
 		y.push_back(yi);
 		y.push_back(yi);
 
-	
+		std::cout << "Solving now the model with Scheduler" << std::endl;
 		/*Scheduler*/
-		double user_error = step;
+		double user_error = 0.001;
 		Scheduler scheduler(mod, yi, numberOfEquations, numberOfLoops, step, user_error);
 		//scheduler.test();
 		std::cout << "///////////////////////////////////////////////////" << std::endl;
@@ -350,11 +350,14 @@ void solution_method(int solve_way, AbstractModell& mod, Eigen::VectorXd& yi, Ei
 		auto duration = MyLibrary::durationTime(start, stop);
 		duration = ((duration / 1000) / 1000) / 60;
 		std::cout << "Time taken by scheduler: " << duration << " minutes " << "to solve " << model_name << std::endl;
+		std::cout << "Printing now the results of scheduler" << std::endl;
+		scheduler.print_scheduler_result();
+		scheduler.~Scheduler();
 
-
+		std::cout << "Solving now the model seq. with RK4" << std::endl;
+		std::vector<std::string> seq_result;
 
 		std::ofstream myfile_Euler("resultSequRK4.txt");
-
 		auto start1 = MyLibrary::startTimer();
 
 		RK4 rk4;
@@ -367,15 +370,18 @@ void solution_method(int solve_way, AbstractModell& mod, Eigen::VectorXd& yi, Ei
 			for (int j = 0; j < numberOfEquations; j++) {
 				rk4.step(mod, yi_plus_1, y, j, step);
 			}
+			std::string str = "";
 
-			myfile_Euler << t << ",";
+			//myfile_Euler << t << ",";
+			str = std::to_string(t) + ",";
 			for (int k = 0; k < numberOfEquations; k++)
 			{
-				myfile_Euler << yi_plus_1(k) << ",";
+				//myfile_Euler << yi_plus_1(k) << ",";
+				str += std::to_string(yi_plus_1(k)) + ",";
 			}
 
-			myfile_Euler << std::endl;
-
+			//myfile_Euler << std::endl;
+			seq_result.push_back(str);
 
 			auto swap1 = y[0];
 			auto swap2 = y[1];
@@ -393,10 +399,16 @@ void solution_method(int solve_way, AbstractModell& mod, Eigen::VectorXd& yi, Ei
 		duration1 = ((duration1 / 1000) / 1000) / 60;
 
 		std::cout << "Time taken by sequ Rk4: " << duration1 << " minutes " << "to solve " << model_name << std::endl;
+		std::cout << "Printing now the results of seq Rk4" << std::endl;
 
+		for (std::vector<std::string>::const_iterator iter = seq_result.begin(); iter != seq_result.end(); ++iter) {
+			myfile_Euler << *iter << std::endl;
+		}
+		
 		myfile_Euler.close();
 	
-		call_python_script(numberOfLoops, numberOfEquations, solve_way, duration1, duration);
+		std::cout << "Calling now python script for calculating the error and plotting it" << std::endl;
+	//	call_python_script(numberOfLoops, numberOfEquations, solve_way, duration1, duration);
 }
 
 

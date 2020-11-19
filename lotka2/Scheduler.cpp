@@ -318,7 +318,15 @@ void Scheduler::print_result(Eigen::VectorXd yi) {
 		count++;
 	}
 
-	this->myfile << str << std::endl;
+	//this->myfile << str << std::endl;
+	this->scheduler_result.push_back(str);
+}
+
+void Scheduler::print_scheduler_result() {
+	
+	for (std::vector<std::string>::const_iterator i = this->scheduler_result.begin(); i != this->scheduler_result.end(); ++i) {
+		this->myfile << *i << std::endl;
+	}
 }
 
 std::vector<Eigen::VectorXd>* Scheduler::get_yi() {
