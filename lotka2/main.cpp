@@ -28,8 +28,8 @@ int main(int argc, char* argv[]) {
 	/*int model = 0;
 	int choose_step = 42;*/
 
-	int model = 20;
-	int choose_step = 42;
+	int model = atoi(argv[1]);
+	int choose_step = atoi(argv[2]);
 	int solve_way = 1;
 	double step = 0;
 	int numberOfEquations = model;
