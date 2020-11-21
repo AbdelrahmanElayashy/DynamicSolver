@@ -65,7 +65,7 @@ with open(scheduler_file, "r") as scheduler, open(seq5_file, "r") as rk4:
         auto = [line for i, line in enumerate(rows2) if i % jmp_st5 == 0] 
     else:
         auto = [lin for j, lin in enumerate(rows1) if j % jmp_st5 == 0]
-    _zipped =  zip(rows1, auto, range(numLoops)) if True else zip(auto, rows2, range(numLoops))
+    _zipped =  zip(rows1, auto, range(numLoops)) if check_side == 1 else zip(auto, rows2, range(numLoops))
     for line1, line2, i in _zipped:
         dt[i] = line1[0]
         arr1 = np.array(line1[1:numEquations + 1], dtype = float)
@@ -87,10 +87,10 @@ with open(_dir + name_min_file, "w") as min_file, open(_dir + name_max_file, "w"
 
 
 outlier = numLoops - count
-lin = ('loosely dashed', (0, (5, 10)))
-plt.plot(dt[:-outlier], error_min[:-outlier], label='error_min 10^-5', color = 'limegreen', linewidth=2, linestyle = lin)
-plt.plot(dt[:-outlier], error_max[:-outlier], label='error_max 10^-5', color = 'red', linewidth=2, linestyle = lin)
-plt.plot(dt[:-outlier], error_avg[:-outlier], label='error_avg 10^-5', color = 'blue', linewidth=2, linestyle = lin)
+
+plt.plot(dt[:-outlier], error_min[:-outlier], label='error_min 10^-5', color = 'limegreen', linewidth=2)
+plt.plot(dt[:-outlier], error_max[:-outlier], label='error_max 10^-5', color = 'red', linewidth=2)
+plt.plot(dt[:-outlier], error_avg[:-outlier], label='error_avg 10^-5', color = 'blue', linewidth=2)
 
 plt.xlabel('time')
 plt.ylabel('error')
@@ -160,9 +160,9 @@ with open(_dir + name_min_file, "w") as min_file, open(_dir + name_max_file, "w"
 
 outlier = numLoops - count
 
-plt.plot(dt[:-outlier], error_min[:-outlier], label='error_min 10^-3', color = 'darkgreen', linewidth=2, linestyle='dotted')
-plt.plot(dt[:-outlier], error_max[:-outlier], label='error_max 10^-3', color = 'darkred', linewidth=2, linestyle='dotted')
-plt.plot(dt[:-outlier], error_avg[:-outlier], label='error_avg 10^-3', color = 'darkblue', linewidth=2, linestyle='dotted')
+plt.plot(dt[:-outlier], error_min[:-outlier], label='error_min 10^-3', color = 'darkgreen', linewidth=3, linestyle='dotted')
+plt.plot(dt[:-outlier], error_max[:-outlier], label='error_max 10^-3', color = 'darkred', linewidth=3, linestyle='dotted')
+plt.plot(dt[:-outlier], error_avg[:-outlier], label='error_avg 10^-3', color = 'darkblue', linewidth=3, linestyle='dotted')
 
 plt.xlabel('time')
 plt.ylabel('error')
