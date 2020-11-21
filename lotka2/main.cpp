@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
 				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
 				
 			}
-			for (int j = 0; j < 10; ++j) {
+			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
@@ -99,7 +99,7 @@ int main(int argc, char* argv[]) {
 				seq_loops = 30000000;
 				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
 			}
-			for (int j = 0; j < 10; ++j) {
+			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
@@ -138,7 +138,7 @@ int main(int argc, char* argv[]) {
 				seq_loops = 30000000;
 				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
 			}
-			for (int j = 0; j < 10; ++j) {
+			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
@@ -177,7 +177,7 @@ int main(int argc, char* argv[]) {
 				seq_loops = 30000000;
 				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
 			}
-			for (int j = 0; j < 10; ++j) {
+			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
@@ -216,7 +216,7 @@ int main(int argc, char* argv[]) {
 				seq_loops = 30000000;
 				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
 			}
-			for (int j = 0; j < 10; ++j) {
+			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
@@ -259,7 +259,7 @@ int main(int argc, char* argv[]) {
 				seq_loops = 30000000;
 				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
 			}
-			for (int j = 0; j < 10; ++j) {
+			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
@@ -302,7 +302,7 @@ int main(int argc, char* argv[]) {
 				seq_loops = 30000000;
 				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
 			}
-			for (int j = 0; j < 10; ++j) {
+			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
@@ -345,7 +345,7 @@ int main(int argc, char* argv[]) {
 				seq_loops = 30000000;
 				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
 			}
-			for (int j = 0; j < 10; ++j) {
+			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
@@ -390,7 +390,7 @@ int main(int argc, char* argv[]) {
 				seq_loops = 30000000;
 				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
 			}
-			for (int j = 0; j < 10; ++j) {
+			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
@@ -444,7 +444,7 @@ int main(int argc, char* argv[]) {
 				seq_loops = 30000000;
 				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
 			}
-			for (int j = 0; j < 10; ++j) {
+			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
