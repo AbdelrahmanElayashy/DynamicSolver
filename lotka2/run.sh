@@ -33,7 +33,9 @@ fi
 
 sleep 5
 
-cp calc_error.py ./$name_folder
+cp draw_execution_time.py ./$name_folder
+cp calculate_model_error.py ./$name_folder
+
 cd $name_folder
 cmake ..
 make
