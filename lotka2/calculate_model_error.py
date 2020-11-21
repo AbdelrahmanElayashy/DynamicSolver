@@ -49,7 +49,7 @@ if not os.path.exists(final_directory):
    
 
 jmp_st5 = int(step_size / 0.00001) if int(step_size / 0.00001) >= 1 else int(0.00001 / step_size)
-
+check_side = 1 if int(step_size / 0.00001) >= 1 else 0
 
 
 count = 0
@@ -61,10 +61,10 @@ dt = np.zeros(numLoops, dtype = float)
 with open(scheduler_file, "r") as scheduler, open(seq5_file, "r") as rk4:
     rows1 = csv.reader(scheduler, delimiter=',')
     rows2 = csv.reader(rk4, delimiter= ',')
-    if True :
-        auto = [line for i, line in enumerate(rows2) if i % 2 == 0] 
+    if check_side == 1 :
+        auto = [line for i, line in enumerate(rows2) if i % jmp_st5 == 0] 
     else:
-        auto = [lin for j, lin in enumerate(rows1) if j % 2 == 0]
+        auto = [lin for j, lin in enumerate(rows1) if j % jmp_st5 == 0]
     _zipped =  zip(rows1, auto, range(numLoops)) if True else zip(auto, rows2, range(numLoops))
     for line1, line2, i in _zipped:
         dt[i] = line1[0]
@@ -102,8 +102,6 @@ plt.legend()
 plt.savefig(_dir + name_graph + ".png")
 
 
-
-
 ##################################################################################################################################
 ######################################Solving with 10^-3##########################################################################
 
@@ -135,19 +133,14 @@ else:
 
    
 jmp_st3 = int(0.001 / step_size)
-
-
 count = 0
 
 
 with open(scheduler_file, "r") as scheduler, open(seq3_file, "r") as rk4:
     rows1 = csv.reader(scheduler, delimiter=',')
     rows2 = csv.reader(rk4, delimiter= ',')
-    if True :
-        auto = [line for i, line in enumerate(rows2) if i % 2 == 0] 
-    else:
-        auto = [lin for j, lin in enumerate(rows1) if j % 2 == 0]
-    _zipped =  zip(rows1, auto, range(numLoops)) if True else zip(auto, rows2, range(numLoops))
+    auto = [lin for j, lin in enumerate(rows1) if j % jmp_st3 == 0]
+    _zipped = zip(auto, rows2, range(numLoops))
     for line1, line2, i in _zipped:
         dt[i] = line1[0]
         arr1 = np.array(line1[1:numEquations + 1], dtype = float)
