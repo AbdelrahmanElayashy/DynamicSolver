@@ -21,10 +21,10 @@ namespace N {
 	MyLibrary lib;
 };
 
-Scheduler::Scheduler(AbstractModell& pmodel, Eigen::VectorXd initial_value, int pthreads, long long numStep, double pstep, double paccepted_error) :
+Scheduler::Scheduler(AbstractModell& pmodel, Eigen::VectorXd initial_value, int pthreads, long long numStep, double pstep, double paccepted_error, std::string file_name) :
 	model(&pmodel), number_of_threads(pthreads), number_of_steps(numStep), step(pstep),
 	thread_pool(new ThreadsPool(pthreads)), scheduler_methods(pmodel), scheduler_equations(),
-	scheduler_queue(new Priority_SafeQueue<EquationContainer>()), accepted_error(paccepted_error), myfile("resultScheduler.txt"), used_methods("method.txt")
+	scheduler_queue(new Priority_SafeQueue<EquationContainer>()), accepted_error(paccepted_error), myfile(file_name)
 {
 	this->initialize_system();
 	this->yi_plus_1.resize(pthreads);
@@ -327,8 +327,10 @@ void Scheduler::print_scheduler_result() {
 	for (std::vector<std::string>::const_iterator i = this->scheduler_result.begin(); i != this->scheduler_result.end(); ++i) {
 		this->myfile << *i << std::endl;
 	}
+	this->myfile.close();
 	this->scheduler_result.clear();
 	this->scheduler_result.shrink_to_fit();
+	
 }
 
 std::vector<Eigen::VectorXd>* Scheduler::get_yi() {

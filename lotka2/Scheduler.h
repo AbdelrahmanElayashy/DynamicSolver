@@ -49,10 +49,13 @@ private:
 	void run_first_steps();
 	void assign_task_pool(MethodContainer& method, EquationContainer& equation);
 
-public:
-	Scheduler(AbstractModell& pmodel, Eigen::VectorXd initial_value, int pthreads, long long numStep, double step, double paccepted_error);
-	~Scheduler();
 
+public:
+	Scheduler(AbstractModell& pmodel, Eigen::VectorXd initial_value, int pthreads, long long numStep, double step, double paccepted_error, std::string file_name);
+	~Scheduler();
+	Scheduler();
+	void* operator new(std::size_t);
+	Scheduler& operator=(const Scheduler&);
 	void test();
 	void run();
 	void stop();
