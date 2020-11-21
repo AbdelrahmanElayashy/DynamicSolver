@@ -87,13 +87,10 @@ with open(_dir + name_min_file, "w") as min_file, open(_dir + name_max_file, "w"
 
 
 outlier = numLoops - count
-
-plt.plot(dt[:-outlier], error_min[:-outlier], label='error_min 10^-5', color = 'limegreen', linewidth=2, marker='h', markerfacecolor='pink', markeredgewidth=2,
-         markersize=12, markevery=300)
-plt.plot(dt[:-outlier], error_max[:-outlier], label='error_max 10^-5', color = 'red', linewidth=2, marker='h', markerfacecolor='pink', markeredgewidth=2,
-         markersize=12, markevery=300)
-plt.plot(dt[:-outlier], error_avg[:-outlier], label='error_avg 10^-5', color = 'blue', linewidth=2, marker='h', markerfacecolor='pink', markeredgewidth=2,
-         markersize=12, markevery=300)
+lin = ('loosely dashed', (0, (5, 10)))
+plt.plot(dt[:-outlier], error_min[:-outlier], label='error_min 10^-5', color = 'limegreen', linewidth=2, linestyle = lin)
+plt.plot(dt[:-outlier], error_max[:-outlier], label='error_max 10^-5', color = 'red', linewidth=2, linestyle = lin)
+plt.plot(dt[:-outlier], error_avg[:-outlier], label='error_avg 10^-5', color = 'blue', linewidth=2, linestyle = lin)
 
 plt.xlabel('time')
 plt.ylabel('error')
@@ -163,9 +160,9 @@ with open(_dir + name_min_file, "w") as min_file, open(_dir + name_max_file, "w"
 
 outlier = numLoops - count
 
-plt.plot(dt[:-outlier], error_min[:-outlier], label='error_min 10^-3', color = 'darkgreen', linewidth=2, marker='D', markeredgecolor='black',markevery=300)
-plt.plot(dt[:-outlier], error_max[:-outlier], label='error_max 10^-3', color = 'darkred', linewidth=2, marker='D', markeredgecolor='black',markevery=300)
-plt.plot(dt[:-outlier], error_avg[:-outlier], label='error_avg 10^-3', color = 'darkblue', linewidth=2, marker='D', markeredgecolor='black',markevery=300)
+plt.plot(dt[:-outlier], error_min[:-outlier], label='error_min 10^-3', color = 'darkgreen', linewidth=2, linestyle='dotted')
+plt.plot(dt[:-outlier], error_max[:-outlier], label='error_max 10^-3', color = 'darkred', linewidth=2, linestyle='dotted')
+plt.plot(dt[:-outlier], error_avg[:-outlier], label='error_avg 10^-3', color = 'darkblue', linewidth=2, linestyle='dotted')
 
 plt.xlabel('time')
 plt.ylabel('error')

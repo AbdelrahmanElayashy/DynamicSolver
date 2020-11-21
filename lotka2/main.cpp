@@ -66,7 +66,7 @@ int main(int argc, char* argv[]) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
-			std::cout << "plotting now the execution time and error" << std::endl;
+			std::cout << "plotting now the execution time and er." << std::endl;
 			call_python_script_time(numberOfEquations, solve_way, step);
 			call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);
 			executionTimes.clear();
