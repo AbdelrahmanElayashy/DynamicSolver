@@ -52,11 +52,11 @@ jmp_st5 = int(step_size / 0.00001) if int(step_size / 0.00001) >= 1 else int(0.0
 check_side = 1 if int(step_size / 0.00001) >= 1 else 0
 
 
-count = 0
-error_min = np.zeros(numLoops, dtype = float)
-error_max = np.zeros(numLoops, dtype = float)
-error_avg = np.zeros(numLoops, dtype = float)
-dt = np.zeros(numLoops, dtype = float)
+count5 = 0
+error5_min = np.zeros(numLoops, dtype = float)
+error5_max = np.zeros(numLoops, dtype = float)
+error5_avg = np.zeros(numLoops, dtype = float)
+dt5 = np.zeros(numLoops, dtype = float)
 
 with open(scheduler_file, "r") as scheduler, open(seq5_file, "r") as rk4:
     rows1 = csv.reader(scheduler, delimiter=',')
@@ -67,30 +67,31 @@ with open(scheduler_file, "r") as scheduler, open(seq5_file, "r") as rk4:
         auto = [lin for j, lin in enumerate(rows1) if j % jmp_st5 == 0]
     _zipped =  zip(rows1, auto, range(numLoops)) if check_side == 1 else zip(auto, rows2, range(numLoops))
     for line1, line2, i in _zipped:
-        dt[i] = line1[0]
+        print(i)
+        dt5[i] = line1[0]
         arr1 = np.array(line1[1:numEquations + 1], dtype = float)
         arr2 = np.array(line2[1:numEquations + 1], dtype = float)
         diff = np.abs(arr1 - arr2)
-        error_min[i] = np.min(diff)
-        error_max[i] = np.max(diff)
-        error_avg[i] = np.average(diff)
-        count = count + 1
+        error5_min[i] = np.min(diff)
+        error5_max[i] = np.max(diff)
+        error5_avg[i] = np.average(diff)
+        count5 = count5 + 1
 
 
 
 _dir = name_folder + "/"
 with open(_dir + name_min_file, "w") as min_file, open(_dir + name_max_file, "w") as max_file, open(_dir + name_avg_file, "w") as avg_file:
-    for i in range(count):
-        min_file.write( str(error_min[i]) + "\n")
-        max_file.write( str(error_max[i]) + "\n")
-        avg_file.write( str(error_avg[i]) + "\n")
+    for i in range(count5):
+        min_file.write( str(error5_min[i]) + "\n")
+        max_file.write( str(error5_max[i]) + "\n")
+        avg_file.write( str(error5_avg[i]) + "\n")
 
 
-outlier = numLoops - count
+outlier = numLoops - count5
 
-plt.plot(dt[:-outlier], error_min[:-outlier], label='error_min 10^-5', color = 'limegreen', linewidth=1.5)
-plt.plot(dt[:-outlier], error_max[:-outlier], label='error_max 10^-5', color = 'red', linewidth=1.5)
-plt.plot(dt[:-outlier], error_avg[:-outlier], label='error_avg 10^-5', color = 'blue', linewidth=1.5)
+plt.plot(dt5[:-outlier], error5_min[:-outlier], label='error_min 10^-5', color = 'limegreen', linewidth=1)
+plt.plot(dt5[:-outlier], error5_max[:-outlier], label='error_max 10^-5', color = 'red', linewidth=1)
+plt.plot(dt5[:-outlier], error5_avg[:-outlier], label='error_avg 10^-5', color = 'blue', linewidth=1)
 
 plt.xlabel('time')
 plt.ylabel('error')
@@ -131,8 +132,11 @@ else:
 
    
 jmp_st3 = int(0.001 / step_size)
-count = 0
-
+count3 = 0
+error3_min = np.zeros(numLoops, dtype = float)
+error3_max = np.zeros(numLoops, dtype = float)
+error3_avg = np.zeros(numLoops, dtype = float)
+dt3 = np.zeros(numLoops, dtype = float)
 
 with open(scheduler_file, "r") as scheduler, open(seq3_file, "r") as rk4:
     rows1 = csv.reader(scheduler, delimiter=',')
@@ -140,30 +144,30 @@ with open(scheduler_file, "r") as scheduler, open(seq3_file, "r") as rk4:
     auto = [lin for j, lin in enumerate(rows1) if j % jmp_st3 == 0]
     _zipped = zip(auto, rows2, range(numLoops))
     for line1, line2, i in _zipped:
-        dt[i] = line1[0]
+        dt3[i] = line1[0]
         arr1 = np.array(line1[1:numEquations + 1], dtype = float)
         arr2 = np.array(line2[1:numEquations + 1], dtype = float)
         diff = np.abs(arr1 - arr2)
-        error_min[i] = np.min(diff)
-        error_max[i] = np.max(diff)
-        error_avg[i] = np.average(diff)
-        count = count + 1
+        error3_min[i] = np.min(diff)
+        error3_max[i] = np.max(diff)
+        error3_avg[i] = np.average(diff)
+        count3 = count3 + 1
 
 
 
 _dir = name_folder + "/"
 with open(_dir + name_min_file, "w") as min_file, open(_dir + name_max_file, "w") as max_file, open(_dir + name_avg_file, "w") as avg_file:
-    for i in range(count):
-        min_file.write( str(error_min[i]) + "\n")
-        max_file.write( str(error_max[i]) + "\n")
-        avg_file.write( str(error_avg[i]) + "\n")
+    for i in range(count3):
+        min_file.write( str(error3_min[i]) + "\n")
+        max_file.write( str(error3_max[i]) + "\n")
+        avg_file.write( str(error3_avg[i]) + "\n")
 
 
-outlier = numLoops - count
+outlier = numLoops - count3
 
-plt.plot(dt[:-outlier], error_min[:-outlier], label='error_min 10^-3', color = 'darkgreen', linewidth=1.5)
-plt.plot(dt[:-outlier], error_max[:-outlier], label='error_max 10^-3', color = 'darkred', linewidth=1.5)
-plt.plot(dt[:-outlier], error_avg[:-outlier], label='error_avg 10^-3', color = 'darkblue', linewidth=1.5)
+plt.plot(dt3[:-outlier], error3_min[:-outlier], label='error_min 10^-3', color = 'darkgreen', linewidth=1)
+plt.plot(dt3[:-outlier], error3_max[:-outlier], label='error_max 10^-3', color = 'darkred', linewidth=1)
+plt.plot(dt3[:-outlier], error3_avg[:-outlier], label='error_avg 10^-3', color = 'darkblue', linewidth=1)
 
 plt.xlabel('time')
 plt.ylabel('error')
