@@ -19,7 +19,7 @@ model = float(sys.argv[7])
 
 
 name_title = ""
-name_graph = "system_error_graph_step" + str(step_size) + "_"
+name_graph = "system_error5_graph_step" + str(step_size) + "_"
 name_min_file = "system_error5_min_step" + str(step_size) + "_"
 name_max_file = "system_error5_max_step" + str(step_size) + "_"
 name_avg_file = "system_error5_avg_step" + str(step_size) + "_"
@@ -88,9 +88,9 @@ with open(_dir + name_min_file, "w") as min_file, open(_dir + name_max_file, "w"
 
 outlier = numLoops - count
 
-plt.plot(dt[:-outlier], error_min[:-outlier], label='error_min 10^-5', color = 'limegreen', linewidth=2)
-plt.plot(dt[:-outlier], error_max[:-outlier], label='error_max 10^-5', color = 'red', linewidth=2)
-plt.plot(dt[:-outlier], error_avg[:-outlier], label='error_avg 10^-5', color = 'blue', linewidth=2)
+plt.plot(dt[:-outlier], error_min[:-outlier], label='error_min 10^-5', color = 'limegreen', linewidth=1.5)
+plt.plot(dt[:-outlier], error_max[:-outlier], label='error_max 10^-5', color = 'red', linewidth=1.5)
+plt.plot(dt[:-outlier], error_avg[:-outlier], label='error_avg 10^-5', color = 'blue', linewidth=1.5)
 
 plt.xlabel('time')
 plt.ylabel('error')
@@ -104,7 +104,7 @@ plt.savefig(_dir + name_graph + ".png")
 
 
 name_title = ""
-name_graph = "system_error_graph_step" + str(step_size) + "_"
+name_graph = "system_error3_graph_step" + str(step_size) + "_"
 name_min_file = "system_error3_min_step" + str(step_size) + "_"
 name_max_file = "system_error3_max_step" + str(step_size) + "_"
 name_avg_file = "system_error3_avg_step" + str(step_size) + "_"
@@ -160,9 +160,9 @@ with open(_dir + name_min_file, "w") as min_file, open(_dir + name_max_file, "w"
 
 outlier = numLoops - count
 
-plt.plot(dt[:-outlier], error_min[:-outlier], label='error_min 10^-3', color = 'darkgreen', linewidth=3, linestyle='dotted')
-plt.plot(dt[:-outlier], error_max[:-outlier], label='error_max 10^-3', color = 'darkred', linewidth=3, linestyle='dotted')
-plt.plot(dt[:-outlier], error_avg[:-outlier], label='error_avg 10^-3', color = 'darkblue', linewidth=3, linestyle='dotted')
+plt.plot(dt[:-outlier], error_min[:-outlier], label='error_min 10^-3', color = 'darkgreen', linewidth=1.5)
+plt.plot(dt[:-outlier], error_max[:-outlier], label='error_max 10^-3', color = 'darkred', linewidth=1.5)
+plt.plot(dt[:-outlier], error_avg[:-outlier], label='error_avg 10^-3', color = 'darkblue', linewidth=1.5)
 
 plt.xlabel('time')
 plt.ylabel('error')
