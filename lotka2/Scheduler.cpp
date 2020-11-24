@@ -295,16 +295,16 @@ void Scheduler::set_yi_plus_1(Eigen::VectorXd pyi) {
 void Scheduler::push_front(Eigen::VectorXd new_value) {
 
 	this->dt += this->step;
-	std::vector<Eigen::VectorXd> new_yi;
-	new_yi.push_back(new_value);
-	new_yi.insert(new_yi.end(), this->yi.begin(), this->yi.end());
-
-	this->yi = new_yi;
+	//std::vector<Eigen::VectorXf> new_yi;
+	//new_yi.push_back(new_value);
+	//new_yi.insert(new_yi.end(), this->yi.begin(), this->yi.end());
+	//this->yi = new_yi;
+	this->yi.emplace(this->yi.begin(), new_value);
 
 	this->print_result(new_value);
 
-	if (this->yi.size() == 7) {
-		this->yi.pop_back();
+	if (this->yi.size() == 5) {
+		this->yi.resize(4);
 	}
 }
 
