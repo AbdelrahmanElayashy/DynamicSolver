@@ -29,6 +29,9 @@ Scheduler::Scheduler(AbstractModell& pmodel, Eigen::VectorXd initial_value, int 
 	this->initialize_system();
 	this->yi_plus_1.resize(pthreads);
 	this->yi.push_back(initial_value);
+	this->yi.push_back(initial_value);
+	this->yi.push_back(initial_value);
+	this->yi.push_back(initial_value);
 	this->dt = 0.0;
 	//myfile.open("result.txt");
 	this->use_approx = new bool[pthreads];
@@ -295,17 +298,15 @@ void Scheduler::set_yi_plus_1(Eigen::VectorXd pyi) {
 void Scheduler::push_front(Eigen::VectorXd new_value) {
 
 	this->dt += this->step;
-	//std::vector<Eigen::VectorXf> new_yi;
-	//new_yi.push_back(new_value);
-	//new_yi.insert(new_yi.end(), this->yi.begin(), this->yi.end());
-	//this->yi = new_yi;
-	this->yi.emplace(this->yi.begin(), new_value);
 
+	auto swap = this->yi[0];
+	this->yi[0] = new_value;
+	auto swap1 = this->yi[1];
+	this->yi[1] = swap;
+	swap = this->yi[2];
+	this->yi[2] = swap1;
+	this->yi[3] = swap;
 	this->print_result(new_value);
-
-	if (this->yi.size() == 5) {
-		this->yi.resize(4);
-	}
 }
 
 void Scheduler::print_result(Eigen::VectorXd yi) {
