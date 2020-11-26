@@ -24,7 +24,7 @@ Scheduler::Scheduler(AbstractModell& pmodel, Eigen::VectorXd initial_value, int 
 	model(&pmodel), number_of_threads(pthreads), number_of_steps(numStep), step(pstep),
 	thread_pool(new ThreadsPool(pthreads)), scheduler_methods(pmodel), scheduler_equations(),
 	scheduler_queue(new Priority_SafeQueue<EquationContainer>()), accepted_error(paccepted_error), myfile(file_name), used_methods("space_method.txt")
-{
+
 	this->initialize_system();
 	this->yi_plus_1.resize(pthreads);
 	this->yi.push_back(initial_value);
@@ -305,7 +305,6 @@ void Scheduler::set_yi_plus_1(Eigen::VectorXd pyi) {
 
 void Scheduler::push_front(Eigen::VectorXd new_value) {
 
-
 	this->dt += this->step;
 
 	auto swap = this->yi[0];
@@ -316,7 +315,6 @@ void Scheduler::push_front(Eigen::VectorXd new_value) {
 	this->yi[2] = swap1;
 	this->yi[3] = swap;
 	this->print_result(new_value);
-
 
 }
 
@@ -341,6 +339,7 @@ void Scheduler::print_scheduler_result() {
 	}
 	this->myfile.close();
 	this->scheduler_result.resize(0);
+
 	this->scheduler_result.shrink_to_fit();
 	
 }
