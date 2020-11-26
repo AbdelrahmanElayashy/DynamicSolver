@@ -23,7 +23,7 @@ namespace N {
 Scheduler::Scheduler(AbstractModell& pmodel, Eigen::VectorXd initial_value, int pthreads, long long numStep, double pstep, double paccepted_error, std::string file_name) :
 	model(&pmodel), number_of_threads(pthreads), number_of_steps(numStep), step(pstep),
 	thread_pool(new ThreadsPool(pthreads)), scheduler_methods(pmodel), scheduler_equations(),
-	scheduler_queue(new Priority_SafeQueue<EquationContainer>()), accepted_error(paccepted_error), myfile(file_name), used_methods("space_method.txt")
+	scheduler_queue(new Priority_SafeQueue<EquationContainer>()), accepted_error(paccepted_error), myfile(file_name), used_methods("space_method.txt"){
 
 	this->initialize_system();
 	this->yi_plus_1.resize(pthreads);
@@ -142,7 +142,7 @@ void Scheduler::run_first_steps() {
 	for (int current_step1 = 0; current_step1 < 4; current_step1++) {
 		for (int index = 0; index < this->number_of_threads; index++) {
 			equation = this->scheduler_equations.get_equations().at(index);
-				equation->set_last_method_used(method.getID());
+
 			equation->set_last_execution_time(equation->get_method_execution_time().find(method.getID())->second);
 			method.executeMethod(*this->model, this->yi_plus_1, yi, *equation, this->step);
 		}
@@ -214,7 +214,7 @@ void Scheduler::assign_task_pool(MethodContainer& method, EquationContainer& equ
 		auto stop = MyLibrary::stopTimer();
 		auto duration = MyLibrary::durationTime(start, stop);
 		_equation.set_last_execution_time(duration);
-		_equation.set_last_method_used(_method.getID());
+
 		this->get_scheduler_queue()->enqueue(_equation);
 		});
 
