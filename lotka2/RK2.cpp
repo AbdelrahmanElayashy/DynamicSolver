@@ -29,13 +29,8 @@ void RK2::step(AbstractModell& model, Eigen::VectorXd& yi_plus_1,
         k2(iter) = h * model.func(yi_new, iter);
         iter++;
     }
-
-    iter = 0;
-    while (yi[0].size() > iter) {
-        yi_plus_1(iter) = yi[0](iter) + k2(iter) + std::pow(h, 3);
-        iter++;
-    }
-
+	
+  yi_plus_1(rank) = yi[0](rank) + k2(rank) + std::pow(h, 3);
 
 }
 

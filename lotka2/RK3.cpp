@@ -45,9 +45,5 @@ void RK3::step(AbstractModell& model, Eigen::VectorXd& yi_plus_1,
          iter++;
      }
 
-     iter = 0;
-     while (yi[0].size() > iter) {
-         yi_plus_1(iter) = yi[0](iter) +  (k1(iter) + 4 * k2(iter) + k3(iter)) / 6;
-         iter++;
-     }
+      yi_plus_1(rank) = yi[0](rank) +  (k1(rank) + 4 * k2(rank) + k3(rank)) / 6;
 }

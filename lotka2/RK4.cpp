@@ -58,12 +58,8 @@ void RK4::step(AbstractModell& model, Eigen::VectorXd& yi_plus_1,
         k4(iter) = h * model.func(yi_new, iter);
         iter++;
     }
-
-    iter = 0;
-    while (yi[0].size() > iter) {
-        yi_plus_1(iter) = yi[0](iter) + (k1(iter) + 2 * k2(iter) + 2 * k3(iter) + k4(iter)) / 6;
-        iter++;
-    }
+	
+    yi_plus_1(rank) = yi[0](rank) + (k1(rank) + 2 * k2(rank) + 2 * k3(rank) + k4(rank)) / 6;
 
 
 }
