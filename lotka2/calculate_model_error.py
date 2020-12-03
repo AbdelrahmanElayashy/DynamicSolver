@@ -69,8 +69,8 @@ with open(scheduler_file, "r") as scheduler, open(seq5_file, "r") as rk4:
     for line1, line2, i in _zipped:
         print(i)
         dt5[i] = line1[0]
-        arr1 = np.array(line1[1:numEquations + 1], dtype = float)
-        arr2 = np.array(line2[1:numEquations + 1], dtype = float)
+        arr1 = np.abs(np.array(line1[1:numEquations + 1], dtype = float))
+        arr2 = np.abs(np.array(line2[1:numEquations + 1], dtype = float))
         diff = np.abs(arr1 - arr2)
         error5_min[i] = np.min(diff)
         error5_max[i] = np.max(diff)

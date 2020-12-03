@@ -23,7 +23,7 @@ namespace N {
 Scheduler::Scheduler(AbstractModell& pmodel, Eigen::VectorXd initial_value, int pthreads, long long numStep, double pstep, double paccepted_error, std::string file_name) :
 	model(&pmodel), number_of_threads(pthreads), number_of_steps(numStep), step(pstep),
 	thread_pool(new ThreadsPool(pthreads)), scheduler_methods(pmodel), scheduler_equations(),
-	scheduler_queue(new Priority_SafeQueue<EquationContainer>()), accepted_error(paccepted_error), myfile(file_name), used_methods("space_method.txt"){
+	scheduler_queue(new Priority_SafeQueue<EquationContainer>()), accepted_error(paccepted_error), myfile(file_name), used_methods("space_method.txt") {
 
 	this->initialize_system();
 	this->yi_plus_1.resize(pthreads);
@@ -38,12 +38,26 @@ Scheduler::Scheduler(AbstractModell& pmodel, Eigen::VectorXd initial_value, int 
 		memset(&this->use_approx[i], 0, sizeof(bool));
 		this->use_approx[i] = false;
 	}
-	this->current_step = 1;
-
+	this->current_step = 4;
+	///////////////////
+	all_result.resize(pthreads);
+	for (auto& element : this->all_result) {
+		element.resize(number_of_steps);
+	}
+	this->last_number_step_each_equation.resize(pthreads);
+	this->initialize_values(initial_value);
 };
 
 Scheduler::~Scheduler() {
 	this->myfile.close();
+}
+
+void Scheduler::initialize_values(Eigen::VectorXd& initial_val) {
+
+	for (int id = 0; id < this->number_of_threads; ++id) {
+		this->all_result[id](0) = initial_val(id);
+	}
+
 }
 
 void Scheduler::initialize_system() {
@@ -68,11 +82,11 @@ void Scheduler::initialize_methods() {
 	new MethodContainer(new ExplicitTwoStep(), scheduler_methods, 4);
 	new MethodContainer(new ExplicitThreeStep(), scheduler_methods, 5);
 	new MethodContainer(new ExplicitFourStep(), scheduler_methods, 6);
-//	new MethodContainer(new ApproxHeun(), scheduler_methods, 7);
-//	new MethodContainer(new ApproxRK3(), scheduler_methods, 8);
-//	new MethodContainer(new ApproxRK4(), scheduler_methods, 9);
+	//	new MethodContainer(new ApproxHeun(), scheduler_methods, 7);
+	//	new MethodContainer(new ApproxRK3(), scheduler_methods, 8);
+	//	new MethodContainer(new ApproxRK4(), scheduler_methods, 9);
 
-	//this->approx_method = this->scheduler_methods.get_methods().find(7)->second;
+		//this->approx_method = this->scheduler_methods.get_methods().find(7)->second;
 
 }
 
@@ -109,27 +123,28 @@ void Scheduler::run() {
 		while (index < this->number_of_threads) {
 
 			auto equation = this->scheduler_queue->dequeue();
-      	if (equation.get_last_number_step() > this->current_step - 1) {
-			   equation.setEquationSpeed(FAST);
+			if (equation.get_last_number_step() > this->current_step) {
+				equation.setEquationSpeed(FAST);
 				this->get_scheduler_queue()->enqueue(equation);
 				continue;
 			}
-     
-        
+
+
 			this->check_next_equation_speed(equation);
 			this->assign_equation_method(equation);
 			update_range_time += equation.get_last_execution_time();
 			index++;
 		}
-		
+
 		this->acceptable_range_time = (update_range_time / this->number_of_threads) * 2;
 		update_range_time = 0;
 		if (this->current_step % 10 == 0) {
 			this->accelerate_system = false;
 			this->decelerate_system = false;
 		}
+		//	used_methods << this->scheduler_equations.get_equations().at(0)->getID() << std::endl;
 		this->current_step += 1;
-		this->push_front(this->yi_plus_1);
+		//	this->push_front(this->yi_plus_1);
 	}
 
 
@@ -138,16 +153,22 @@ void Scheduler::run() {
 void Scheduler::run_first_steps() {
 
 	MethodContainer& method = this->scheduler_methods.calculate_method_for_first_steps(this->step, this->accepted_error);
-	EquationContainer* equation;
+	Eigen::VectorXd next_step;
+	next_step.resize(this->number_of_threads);
 	for (int current_step1 = 0; current_step1 < 4; current_step1++) {
 		for (int index = 0; index < this->number_of_threads; index++) {
-			equation = this->scheduler_equations.get_equations().at(index);
-
-			equation->set_last_execution_time(equation->get_method_execution_time().find(method.getID())->second);
-			method.executeMethod(*this->model, this->yi_plus_1, yi, *equation, this->step);
+			EquationContainer equation = (this->scheduler_queue->dequeue());
+			auto start = MyLibrary::startTimer();
+			method.executeMethod(*this->model, next_step, yi, equation, this->step);
+			equation.increment_number_step();
+			this->push_step_value(equation, next_step(equation.getID()));
+			auto stop = MyLibrary::startTimer();
+			auto duration = MyLibrary::durationTime(start, stop);
+			equation.set_last_execution_time(duration);
+			this->scheduler_queue->enqueue(equation);
 		}
-		this->push_front(this->yi_plus_1);
-	
+		//this->push_front(this->yi_plus_1);
+
 	}
 
 }
@@ -166,16 +187,16 @@ void Scheduler::assign_equation_method(EquationContainer& equation) {
 		break;
 	case BALANCED:
 
-				method = this->scheduler_methods.get_balancedMethod()[(this->current_step % this->scheduler_methods.get_balancedMethod().size())];
-			
-			//		equation.set_last_execution_time(equation.get_method_execution_time().find(method->getID())->second);
-		
+		method = this->scheduler_methods.get_balancedMethod()[(this->current_step % this->scheduler_methods.get_balancedMethod().size())];
+
+		//		equation.set_last_execution_time(equation.get_method_execution_time().find(method->getID())->second);
+
 		break;
 	case SLOW:
 
-				method = this->scheduler_methods.get_fastMethod()[(this->current_step % this->scheduler_methods.get_fastMethod().size())];
-			
-			//		equation.set_last_execution_time(equation.get_method_execution_time().find(method->getID())->second);
+		method = this->scheduler_methods.get_fastMethod()[(this->current_step % this->scheduler_methods.get_fastMethod().size())];
+
+		//		equation.set_last_execution_time(equation.get_method_execution_time().find(method->getID())->second);
 
 		break;
 	default:
@@ -199,18 +220,20 @@ void Scheduler::assign_task_pool(MethodContainer& method, EquationContainer& equ
 		double _step = this->step;
 
 
-		std::vector<Eigen::VectorXd> yis;
-		yis.push_back(this->get_yi()->at(0));
+		auto yis = this->build_old_values(_equation.getID());
+		/*yis.push_back(this->get_yi()->at(0));
 		yis.push_back(this->get_yi()->at(1));
 		yis.push_back(this->get_yi()->at(2));
-		yis.push_back(this->get_yi()->at(3));
+		yis.push_back(this->get_yi()->at(3));*/
 		//std::cout << "getting in thread" << std::endl;
 
-		Eigen::VectorXd yi_plus_new(this->get_yi_plus_1());
-
-		_method.executeMethod(this->get_model(), yi_plus_new, yis, _equation, _step);
-		this->set_yi_plus_1(yi_plus_new);
+		//Eigen::VectorXd yi_plus_new(this->get_yi_plus_1());
+		Eigen::VectorXd next_step;
+		next_step.resize(this->get_number_of_threads());
+		_method.executeMethod(this->get_model(), next_step, yis, _equation, _step);
+		//this->set_yi_plus_1(yi_plus_new);
 		_equation.increment_number_step();
+		this->push_step_value(_equation, next_step(_equation.getID()));
 		auto stop = MyLibrary::stopTimer();
 		auto duration = MyLibrary::durationTime(start, stop);
 		_equation.set_last_execution_time(duration);
@@ -219,6 +242,58 @@ void Scheduler::assign_task_pool(MethodContainer& method, EquationContainer& equ
 		});
 
 }
+// call it after increment step
+void Scheduler::push_step_value(EquationContainer& equation, double step_value) {
+
+	this->all_result[equation.getID()](equation.get_last_number_step()) = step_value;
+	this->last_number_step_each_equation[equation.getID()] = equation.get_last_number_step();
+}
+// call it before increment step.
+Eigen::VectorXd Scheduler::get_old_values(int id) {
+	Eigen::VectorXd old_values;
+	old_values.resize(4);
+	old_values(0) = this->all_result[id](this->last_number_step_each_equation[id]);
+	old_values(1) = this->all_result[id](this->last_number_step_each_equation[id] - 1);
+	old_values(2) = this->all_result[id](this->last_number_step_each_equation[id] - 2);
+	old_values(3) = this->all_result[id](this->last_number_step_each_equation[id] - 3);
+
+	return old_values;
+}
+
+double Scheduler::get_one_value(int id, long long step_value) {
+	//sure that step_value is not err.
+	double val = this->all_result[id](step_value);
+	return val;
+}
+
+std::vector<Eigen::VectorXd> Scheduler::build_old_values(int pid) {
+	std::vector<Eigen::VectorXd> old_values_equations;
+	int mark_speed = 0;
+	old_values_equations.resize(4);
+	for (int i = 0; i < 4; ++i) {
+		old_values_equations[i].resize(this->number_of_threads);
+	}
+	long long cur_step = this->last_number_step_each_equation[pid];
+	for (int id = 0; id < this->number_of_threads; ++id) {
+
+		for (int i = 0; i < 4; ++i) {
+			long long last_step_equ = this->last_number_step_each_equation[id];
+			if (cur_step == last_step_equ) {
+				old_values_equations[i](id) = this->get_one_value(id, cur_step - i);
+			}
+			else if (cur_step > last_step_equ) {
+				old_values_equations[i](id) = this->get_one_value(id, last_step_equ - i);
+				mark_speed++;
+			}
+			else if (cur_step < last_step_equ) {
+				old_values_equations[i](id) = this->get_one_value(id, cur_step - i);
+				mark_speed--;
+			}
+		}
+	}
+	return old_values_equations;
+}
+
 
 
 
@@ -333,21 +408,46 @@ void Scheduler::print_result(Eigen::VectorXd yi) {
 }
 
 void Scheduler::print_scheduler_result() {
-	
-	for (std::vector<std::string>::const_iterator i = this->scheduler_result.begin(); i != this->scheduler_result.end(); ++i) {
-		this->myfile << *i << std::endl;
+
+	//for (std::vector<std::string>::const_iterator i = this->scheduler_result.begin(); i != this->scheduler_result.end(); ++i) {
+	//	this->myfile << *i << std::endl;
+	//}
+	//this->myfile.close();
+	//this->scheduler_result.resize(0);
+
+	//this->scheduler_result.shrink_to_fit();
+	long long min_steps = this->number_of_steps;
+
+	for (int i = 0; i < this->scheduler_queue->get_size(); ++i) {
+		EquationContainer equation = this->scheduler_queue->dequeue();
+		if (equation.get_last_number_step() < min_steps) {
+			min_steps = equation.get_last_number_step();
+		}
+	}
+
+	std::string str = "";
+	for (int i = 0; i < min_steps; ++i) {
+    this->dt += this->step;
+		str = std::to_string(this->dt) + ",";
+		for (int j = 0; j < this->number_of_threads; ++j) {
+			str += std::to_string(this->all_result[j](i)) + ",";
+		}
+		this->myfile << str << std::endl;
+		str = "";
 	}
 	this->myfile.close();
-	this->scheduler_result.resize(0);
+	this->all_result.resize(0);
+	this->all_result.shrink_to_fit();
 
-	this->scheduler_result.shrink_to_fit();
-	
 }
 
 std::vector<Eigen::VectorXd>* Scheduler::get_yi() {
 	return &this->yi;
 }
 
+int Scheduler::get_number_of_threads() {
+	return this->number_of_threads;
+}
 
 
 void Scheduler::test() {
