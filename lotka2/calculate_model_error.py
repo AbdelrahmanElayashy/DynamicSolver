@@ -60,6 +60,8 @@ error3_min = np.zeros(numLoops, dtype = float)
 error3_max = np.zeros(numLoops, dtype = float)
 error3_avg = np.zeros(numLoops, dtype = float)
 
+e3 = np.zeros(numLoops, dtype = float)
+
 with open(scheduler_file, "r") as scheduler, open(seq5_file, "r") as rk4, open(seq3_file, "r") as rk43:
     rows1 = csv.reader(scheduler, delimiter=',')
     rows2 = csv.reader(rk4, delimiter= ',')
@@ -90,6 +92,7 @@ with open(scheduler_file, "r") as scheduler, open(seq5_file, "r") as rk4, open(s
         error3_min[i] = np.min(arr3)
         error3_max[i] = np.max(arr3)
         error3_avg[i] = np.average(arr3)
+        e3[i] = np.divide(np.abs( error3_avg[i] - error5_avg[i]), error3_avg[i])
         count5 = count5 + 1
 
 
@@ -111,6 +114,8 @@ plt.plot(dt5[:-outlier], error5_avg[:-outlier], label='error_avg Scheduler', col
 plt.plot(dt5[:-outlier], error3_min[:-outlier], label='error_min 10^-3', color = 'darkgreen', linewidth=1)
 plt.plot(dt5[:-outlier], error3_max[:-outlier], label='error_max 10^-3', color = 'darkred', linewidth=1)
 plt.plot(dt5[:-outlier], error3_avg[:-outlier], label='error_avg 10^-3', color = 'darkblue', linewidth=1)
+
+plt.plot(dt5[:-outlier], e3[:-outlier], label='e3', color = 'black', linewidth=1)
 
 plt.xlabel('time')
 plt.ylabel('error compTo 10^-5')
