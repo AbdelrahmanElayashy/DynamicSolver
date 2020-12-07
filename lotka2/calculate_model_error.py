@@ -105,7 +105,7 @@ with open(_dir + name_min_file, "w") as min_file, open(_dir + name_max_file, "w"
         avg_file.write( str(error5_avg[i]) + "\n")
 
 
-outlier = numLoops - count5
+outlier = numLoops - count5 + 1
 
 plt.plot(dt5[:-outlier], error5_min[:-outlier], label='error_min Scheduler', color = 'limegreen', linewidth=1)
 plt.plot(dt5[:-outlier], error5_max[:-outlier], label='error_max Scheduler', color = 'red', linewidth=1)
