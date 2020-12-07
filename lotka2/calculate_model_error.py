@@ -83,8 +83,8 @@ with open(scheduler_file, "r") as scheduler, open(seq5_file, "r") as rk4, open(s
         ###############################################
         arr1.fill(-0.5)
         arr3.fill(-0.5)
-        np.divide(diff_sch, arr2, out=arr1, where=arr2!=0)
-        np.divide(diff_seq3, arr2, out=arr3, where=arr2!=0)
+        np.divide(diff_sch, np.abs(arr2), out=arr1, where=arr2!=0)
+        np.divide(diff_seq3, np.abs(arr2), out=arr3, where=arr2!=0)
         ################################################
         error5_min[i] = np.min(arr1) #scheduler
         error5_max[i] = np.max(arr1)
