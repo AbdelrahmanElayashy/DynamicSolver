@@ -92,7 +92,7 @@ with open(scheduler_file, "r") as scheduler, open(seq5_file, "r") as rk4, open(s
         error3_min[i] = np.min(arr3)
         error3_max[i] = np.max(arr3)
         error3_avg[i] = np.average(arr3)
-        e3[i] = np.divide(np.abs( error3_avg[i] - error5_avg[i]), error3_avg[i])
+        e3[i] = (np.abs( np.abs(error3_avg[i]) - np.abs(error5_avg[i])))
         count5 = count5 + 1
 
 
