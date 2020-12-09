@@ -542,13 +542,14 @@ std::string merge_files(AbstractModell& mod, const int numberOfEquation, const d
 			}
 		    numbers[count] /= num_tests;
 			count++;
+			delete[] strs;
 		}
 
 		for (int i = 0; i < numberOfEquation + 1; ++i) {
 			out_result << numbers[i] << ",";
 		}
 		out_result << std::endl;
-
+		delete[] str_stream;
 	}
 
 	for (int i = 0; i < num_tests; ++i) {
