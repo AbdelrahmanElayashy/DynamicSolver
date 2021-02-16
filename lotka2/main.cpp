@@ -30,7 +30,7 @@ std::string merge_files(AbstractModell& mod, const int numberOfEquation, const d
 std::vector<double> executionTimes;
 std::vector<double> executionTimes_seq;
 
- int num_tests = 10;
+int num_tests = 0;
 std::string merged_file[50];
 std::vector<std::string> seq_file_name;
 
@@ -55,21 +55,21 @@ int main(int argc, char* argv[]) {
 		solve_way = 0;
 		for (int i = 0; i < 4; ++i) {
 			if (i == 0) {
-				double seq_step = 0.001;
-				double seq_loops = 300000;
+				/*double seq_step = 0.001;
+				double seq_loops = 300;
 				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
-				seq_step = 0.00001;
-				seq_loops = 30000000;
-				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
-				
+				seq_step = 0.0001;
+				seq_loops = 300;
+				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);*/
+
 			}
 			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
-			std::cout << "plotting now the execution time and er." << std::endl;
-			call_python_script_time(numberOfEquations, solve_way, step);
-			call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);
+			//std::cout << "plotting now the execution time and error" << std::endl;
+			//call_python_script_time(numberOfEquations, solve_way, step);
+			//call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);
 			executionTimes.clear();
 			numberOfLoops *= 10;
 			step /= 10;
@@ -92,20 +92,20 @@ int main(int argc, char* argv[]) {
 		LotkaModell lm(a, b);
 		for (int i = 0; i < 4; ++i) {
 			if (i == 0) {
-				double seq_step = 0.001;
+				/*double seq_step = 0.001;
 				double seq_loops = 300000;
 				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
 				seq_step = 0.00001;
 				seq_loops = 30000000;
-				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
+				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);*/
 			}
 			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
-			std::cout << "plotting now the execution time and error" << std::endl;
-			call_python_script_time(numberOfEquations, solve_way, step);
-			call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);
+			/*			std::cout << "plotting now the execution time and error" << std::endl;
+						call_python_script_time(numberOfEquations, solve_way, step);
+						call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);*/
 			executionTimes.clear();
 			numberOfLoops *= 10;
 			step /= 10;
@@ -127,24 +127,24 @@ int main(int argc, char* argv[]) {
 		Eigen::VectorXd yi(model);
 		Eigen::VectorXd yi_plus_1(model);
 		yi << 0.6, 0.4, 0.5, 0.5;
-		
+
 		LotkaModell lm(a, b);
 		for (int i = 0; i < 4; ++i) {
 			if (i == 0) {
-				double seq_step = 0.001;
-				double seq_loops = 300000;
+				/*double seq_step = 0.001;
+				double seq_loops = 300;
 				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
 				seq_step = 0.00001;
-				seq_loops = 30000000;
-				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
+				seq_loops = 300;
+				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);*/
 			}
 			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
-			std::cout << "plotting now the execution time and error" << std::endl;
-			call_python_script_time(numberOfEquations, solve_way, step);
-			call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);
+			/*	std::cout << "plotting now the execution time and error" << std::endl;
+				call_python_script_time(numberOfEquations, solve_way, step);
+				call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);*/
 			executionTimes.clear();
 			numberOfLoops *= 10;
 			step /= 10;
@@ -166,24 +166,24 @@ int main(int argc, char* argv[]) {
 		Eigen::VectorXd yi(model);
 		Eigen::VectorXd yi_plus_1(model);
 		yi << 0.6, 0.4, 0.5, 0.5, 0.3;
-	
+
 		LotkaModell lm(a, b);
 		for (int i = 0; i < 4; ++i) {
 			if (i == 0) {
-				double seq_step = 0.001;
-				double seq_loops = 300000;
-				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
-				seq_step = 0.00001;
-				seq_loops = 30000000;
-				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
+				//double seq_step = 0.001;
+				//double seq_loops = 300000;
+				////solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
+				//seq_step = 0.00001;
+				//seq_loops = 30000000;
+				////solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
 			}
 			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
-			std::cout << "plotting now the execution time and error" << std::endl;
-			call_python_script_time(numberOfEquations, solve_way, step);
-			call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);
+			//std::cout << "plotting now the execution time and error" << std::endl;
+			//call_python_script_time(numberOfEquations, solve_way, step);
+			//call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);
 			executionTimes.clear();
 			numberOfLoops *= 10;
 			step /= 10;
@@ -209,20 +209,20 @@ int main(int argc, char* argv[]) {
 		LotkaModell lm(a, b);
 		for (int i = 0; i < 4; ++i) {
 			if (i == 0) {
-				double seq_step = 0.001;
+				/*double seq_step = 0.001;
 				double seq_loops = 300000;
 				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
 				seq_step = 0.00001;
 				seq_loops = 30000000;
-				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
+				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);*/
 			}
 			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
-			std::cout << "plotting now the execution time and error" << std::endl;
+			/*std::cout << "plotting now the execution time and error" << std::endl;
 			call_python_script_time(numberOfEquations, solve_way, step);
-			call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);
+			call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);*/
 			executionTimes.clear();
 			numberOfLoops *= 10;
 			step /= 10;
@@ -248,24 +248,24 @@ int main(int argc, char* argv[]) {
 		yi << 0.6, 0.4, 0.5, 0.5, 0.3, 0.5, 0.3;
 
 
-		
+
 		LotkaModell lm(a, b);
 		for (int i = 0; i < 4; ++i) {
 			if (i == 0) {
-				double seq_step = 0.001;
-				double seq_loops = 300000;
-				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
-				seq_step = 0.00001;
-				seq_loops = 30000000;
-				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
+				/*	double seq_step = 0.001;
+					double seq_loops = 300000;
+					solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
+					seq_step = 0.00001;
+					seq_loops = 30000000;
+					solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);*/
 			}
 			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
-			std::cout << "plotting now the execution time and error" << std::endl;
+			/*std::cout << "plotting now the execution time and error" << std::endl;
 			call_python_script_time(numberOfEquations, solve_way, step);
-			call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);
+			call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);*/
 			executionTimes.clear();
 			numberOfLoops *= 10;
 			step /= 10;
@@ -291,24 +291,24 @@ int main(int argc, char* argv[]) {
 		Eigen::VectorXd yi_plus_1(model);
 		yi << 0.6, 0.4, 0.5, 0.5, 0.3, 0.5, 0.3, 0.4;
 
-		
+
 		LotkaModell lm(a, b);
 		for (int i = 0; i < 4; ++i) {
 			if (i == 0) {
-				double seq_step = 0.001;
+				/*double seq_step = 0.001;
 				double seq_loops = 300000;
 				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
 				seq_step = 0.00001;
 				seq_loops = 30000000;
-				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
+				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);*/
 			}
 			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
-			std::cout << "plotting now the execution time and error" << std::endl;
+			/*std::cout << "plotting now the execution time and error" << std::endl;
 			call_python_script_time(numberOfEquations, solve_way, step);
-			call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);
+			call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);*/
 			executionTimes.clear();
 			numberOfLoops *= 10;
 			step /= 10;
@@ -338,20 +338,20 @@ int main(int argc, char* argv[]) {
 		LotkaModell lm(a, b);
 		for (int i = 0; i < 4; ++i) {
 			if (i == 0) {
-				double seq_step = 0.001;
-				double seq_loops = 300000;
-				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
-				seq_step = 0.00001;
-				seq_loops = 30000000;
-				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
+				/*	double seq_step = 0.001;
+					double seq_loops = 300000;
+					solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
+					seq_step = 0.00001;
+					seq_loops = 30000000;
+					solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);*/
 			}
 			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
-			std::cout << "plotting now the execution time and error" << std::endl;
+			/*std::cout << "plotting now the execution time and error" << std::endl;
 			call_python_script_time(numberOfEquations, solve_way, step);
-			call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);
+			call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);*/
 			executionTimes.clear();
 			numberOfLoops *= 10;
 			step /= 10;
@@ -379,24 +379,24 @@ int main(int argc, char* argv[]) {
 		Eigen::VectorXd yi_plus_1(model);
 		yi << 0.6, 0.4, 0.5, 0.5, 0.3, 0.5, 0.3, 0.4, 0.5, 0.4;
 
-		
+
 		LotkaModell lm(a, b);
 		for (int i = 0; i < 4; ++i) {
 			if (i == 0) {
-				double seq_step = 0.001;
-				double seq_loops = 300000;
-				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
-				seq_step = 0.00001;
-				seq_loops = 30000000;
-				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
+				/*	double seq_step = 0.001;
+					double seq_loops = 300000;
+					solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
+					seq_step = 0.00001;
+					seq_loops = 30000000;
+					solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);*/
 			}
 			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
-			std::cout << "plotting now the execution time and error" << std::endl;
+			/*std::cout << "plotting now the execution time and error" << std::endl;
 			call_python_script_time(numberOfEquations, solve_way, step);
-			call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);
+			call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);*/
 			executionTimes.clear();
 			numberOfLoops *= 10;
 			step /= 10;
@@ -437,20 +437,20 @@ int main(int argc, char* argv[]) {
 		LotkaModell lm(a, b);
 		for (int i = 0; i < 4; ++i) {
 			if (i == 0) {
-				double seq_step = 0.001;
-				double seq_loops = 300000;
-				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
-				seq_step = 0.00001;
-				seq_loops = 30000000;
-				solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
+				/*	double seq_step = 0.001;
+					double seq_loops = 300000;
+					solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);
+					seq_step = 0.00001;
+					seq_loops = 30000000;
+					solution_method2(solve_way, lm, yi, yi_plus_1, numberOfEquations, seq_step, seq_loops);*/
 			}
 			for (int j = 0; j < num_tests; ++j) {
 				solution_method(solve_way, lm, yi, yi_plus_1, numberOfEquations, step, numberOfLoops, j);
 			}
 			std::string search_file = merge_files(lm, numberOfEquations, step);
-			std::cout << "plotting now the execution time and error" << std::endl;
+			/*std::cout << "plotting now the execution time and error" << std::endl;
 			call_python_script_time(numberOfEquations, solve_way, step);
-			call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);
+			call_python_script_error(search_file, numberOfLoops, numberOfEquations, step, solve_way);*/
 			executionTimes.clear();
 			numberOfLoops *= 10;
 			step /= 10;
@@ -460,32 +460,42 @@ int main(int argc, char* argv[]) {
 		std::cout << "Not Valid model choose : 0 for single track model, n for lotk-volterra with size n" << std::endl;
 		exit(-1);
 	}
-	
-	
+
 }
 
-void solution_method(int solve_way, AbstractModell& mod, Eigen::VectorXd& yi, Eigen::VectorXd& yi_plus_1,int numberOfEquations, double step, long long numberOfLoops, int numTest) {
-		
-		std::string model_name = "";
-		if (typeid(mod) == typeid(LotkaModell)) {
-			model_name = "LotkaModel";
+void solution_method(int solve_way, AbstractModell& mod, Eigen::VectorXd& yi, Eigen::VectorXd& yi_plus_1, int numberOfEquations, double step, long long numberOfLoops, int numTest) {
+
+	std::string model_name = "";
+	if (typeid(mod) == typeid(LotkaModell)) {
+		model_name = "LV";
+	}
+	else {
+		model_name = "TM";
+	}
+	std::cout << "solving now the model with scheduler: iteration test" << numTest << ", step: " << step << std::endl;
+
+	double user_error = 0.001;
+	std::string stepSt = std::to_string(step);
+	std::string countSt = stepSt.substr(stepSt.find(".") - 1, stepSt.find("1") - 1);
+	int i, totChar;
+	totChar = 0;
+	for (i = 0; countSt[i] != '\0'; i++) {
+		if (countSt[i] != ' ')
+		{
+			totChar++;
 		}
-		else {
-			model_name = "trackModel";
-		}
-		std::cout << "solving now the model with scheduler: iteration test" << numTest << ", step: " << step << std::endl;
-		
-		double user_error = 0.001;
-		std::string file_name = "Rscheduler_" + model_name + "_" + std::to_string(numberOfEquations) + "_" + std::to_string(step) + "_" +std::to_string(numTest) +".txt";
-		Scheduler scheduler(mod, yi, numberOfEquations, numberOfLoops, step, user_error, file_name);
-		auto start = MyLibrary::startTimer();
-		scheduler.run();
-		auto stop = MyLibrary::stopTimer();
-		auto duration = MyLibrary::durationTime(start, stop);
-		duration = ((duration / 1000) / 1000) / 60;
-		executionTimes.push_back(duration);
-		merged_file[numTest] = file_name;
-		scheduler.print_scheduler_result();
+	}
+
+	std::string file_name = "approx_" + std::to_string(totChar) + "_" + model_name + "_" + std::to_string(numberOfEquations) + "_numTest" + std::to_string(numTest) + ".txt";
+	Scheduler scheduler(mod, yi, numberOfEquations, numberOfLoops, step, user_error, file_name);
+	auto start = MyLibrary::startTimer();
+	scheduler.run();
+	auto stop = MyLibrary::stopTimer();
+	auto duration = MyLibrary::durationTime(start, stop);
+	duration = ((duration / 1000) / 1000) / 60;
+	executionTimes.push_back(duration);
+	merged_file[numTest] = file_name;
+	scheduler.print_scheduler_result();
 
 }
 
@@ -500,17 +510,28 @@ std::string merge_files(AbstractModell& mod, const int numberOfEquation, const d
 	else {
 		model_name = "trackModel";
 	}
-	std::string file_name = "Rscheduler_" + model_name + "_" + std::to_string(numberOfEquation) + "_" + std::to_string(step) + ".txt";
-	std::fstream* streams = new std::fstream [num_tests];
+	std::string stepSt = std::to_string(step);
+	std::string countSt = stepSt.substr(stepSt.find(".") - 1, stepSt.find("1") - 1);
+	int i, totChar;
+	totChar = 0;
+	for (i = 0; countSt[i] != '\0'; i++) {
+		if (countSt[i] != ' ')
+		{
+			totChar++;
+		}
+	}
+
+	std::string file_name = "approx_" + std::to_string(totChar) + "_" + model_name + "_" + std::to_string(numberOfEquation) + ".txt";
+	std::fstream* streams = new std::fstream[num_tests];
 	std::ofstream out_result(file_name);
 
 	for (int i = 0; i < num_tests; ++i) {
 		streams[i].open(merged_file[i]);
 	}
 
-	double *numbers = new double [numberOfEquation + 1];
+	double* numbers = new double[numberOfEquation + 1];
 	int count = 0;
-	std::string *lines = new std::string [num_tests];
+	std::string* lines = new std::string[num_tests];
 	bool condition = false;
 	while (true) {
 		for (int k = 0; k < num_tests; ++k) {
@@ -521,13 +542,13 @@ std::string merge_files(AbstractModell& mod, const int numberOfEquation, const d
 			break;
 
 		count = 0;
-		std::stringstream* str_stream = new std::stringstream [num_tests];
+		std::stringstream* str_stream = new std::stringstream[num_tests];
 		for (int j = 0; j < num_tests; ++j) {
 			str_stream[j] << lines[j];
 		}
 
 		while (count < numberOfEquation + 1) {
-			std::string *strs = new std::string [num_tests];
+			std::string* strs = new std::string[num_tests];
 			for (int q = 0; q < num_tests; ++q) {
 				std::getline(str_stream[q], strs[q], ',');
 			}
@@ -540,16 +561,15 @@ std::string merge_files(AbstractModell& mod, const int numberOfEquation, const d
 			for (int g = 0; g < num_tests; ++g) {
 				numbers[count] += std::stod(strs[g]);
 			}
-		    numbers[count] /= num_tests;
+			numbers[count] /= num_tests;
 			count++;
-			delete[] strs;
 		}
 
 		for (int i = 0; i < numberOfEquation + 1; ++i) {
 			out_result << numbers[i] << ",";
 		}
 		out_result << std::endl;
-		delete[] str_stream;
+
 	}
 
 	for (int i = 0; i < num_tests; ++i) {
@@ -595,18 +615,17 @@ void solution_method2(int solve_way, AbstractModell& mod, Eigen::VectorXd& yi, E
 		for (int j = 0; j < numberOfEquations; j++) {
 			rk4.step(mod, yi_plus_1, y, j, step);
 		}
-
 		std::string str = "";
 
-	//	myfile_Euler << t << ",";
+		//	myfile_Euler << t << ",";
 		str = std::to_string(t) + ",";
 		for (int k = 0; k < numberOfEquations; k++)
 		{
-	//		myfile_Euler << yi_plus_1(k) << ",";
+			//		myfile_Euler << yi_plus_1(k) << ",";
 			str += std::to_string(yi_plus_1(k)) + ",";
 		}
 
-	//	myfile_Euler << std::endl;
+		//	myfile_Euler << std::endl;
 		seq_result.push_back(str);
 
 		auto swap1 = y[0];
@@ -631,7 +650,6 @@ void solution_method2(int solve_way, AbstractModell& mod, Eigen::VectorXd& yi, E
 
 	seq_file_name.push_back(file_name);
 	myfile_Euler.close();
-
 
 
 }

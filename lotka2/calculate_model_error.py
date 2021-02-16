@@ -49,7 +49,6 @@ if not os.path.exists(final_directory):
    
 jmp_st3 = int(0.001 / 0.00001)
 jmp_st5 = int(step_size / 0.00001) if int(step_size / 0.00001) >= 1 else int(0.00001 / step_size)
-check_side = 1 if int(step_size / 0.00001) >= 1 else 0
 jmp_s = int(0.001 / step_size)
 
 count5 = 0
@@ -57,7 +56,6 @@ error5_min = np.zeros(numLoops, dtype = float)
 error5_max = np.zeros(numLoops, dtype = float)
 error5_avg = np.zeros(numLoops, dtype = float)
 dt5 = np.zeros(numLoops, dtype = float)
-
 
 error3_min = np.zeros(numLoops, dtype = float)
 error3_max = np.zeros(numLoops, dtype = float)
