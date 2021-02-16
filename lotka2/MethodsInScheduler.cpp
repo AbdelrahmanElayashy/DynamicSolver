@@ -162,7 +162,7 @@
 			yi(size) = 42;
 		}
 		std::vector<Eigen::VectorXd> y;
-		y.assign(numEquations, yi);
+		y.assign(numEquations + 2, yi);
 
 		auto start = MyLibrary::startTimer();
 		for (int i = 0; i < 1; i++) {
